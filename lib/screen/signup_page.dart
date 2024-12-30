@@ -26,10 +26,13 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> _register(BuildContext context) async {
     if (_signUpKey.currentState?.validate() ?? false) {
+      // set loading state to true
       setState(() {
         _isLoading = true;
       });
 
+      // run signup function from firebase
+      // set the user provider with user data.
       try {
         final userData = await _auth.signUp(_usernameController.text,
             _emailController.text, _passController.text, _phoneController.text);
@@ -41,16 +44,19 @@ class _SignupPageState extends State<SignupPage> {
         userProvider.setPhone(userData["phone"]);
         userProvider.setBio(userData["bio"]);
 
+        // navigate to layout page after successfully register
         Navigator.pushAndRemoveUntil(
             // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(builder: (context) => const Layout()),
             (route) => false);
       } catch (e) {
+        // if there is an error, show the error message.
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.toString())));
       } finally {
+        // set the loading state to false.
         setState(() {
           _isLoading = false;
         });
@@ -58,6 +64,10 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
+  // Make a container with linear gradient background,
+  // Show signup title, and show form for user to signup.
+  // Show message and button signin for user to navigate to signin page.
+  // Show signup button, and run _register function.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -254,6 +264,8 @@ class _SignupPageState extends State<SignupPage> {
                           const SizedBox(
                             height: 15,
                           ),
+                          // if the loading state is true, show progress indicator,
+                          // else show signup button to run _register function
                           _isLoading
                               ? const CircularProgressIndicator()
                               : GestureDetector(

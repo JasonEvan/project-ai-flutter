@@ -22,10 +22,13 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _signIn(BuildContext context) async {
     if (_loginKey.currentState?.validate() ?? false) {
+      // set the loading state to true.
       setState(() {
         _isLoading = true;
       });
 
+      // run signin function from firebase
+      // set the user provider with user data.
       try {
         final userData =
             await _auth.signIn(_emailController.text, _passController.text);
@@ -36,9 +39,11 @@ class _LoginPageState extends State<LoginPage> {
         userProvider.setBio(userData["bio"]);
         userProvider.setPhone(userData["phone"]);
       } catch (e) {
+        // if there is an error, show the error message.
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.toString())));
       } finally {
+        // set the loading state to false.
         setState(() {
           _isLoading = false;
         });
@@ -46,6 +51,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  // Make a container with linear gradient background,
+  // Show sign in title, and show form for user to login.
+  // Show message and button sign up for user to navigate to signup page.
+  // Show login button, and run _signIn function.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,6 +173,8 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(
                           height: 15,
                         ),
+                        // check if loading state is true, show progress indicator,
+                        // else, sow login button with onTap function to run _signIn function.
                         _isLoading
                             ? const CircularProgressIndicator()
                             : GestureDetector(

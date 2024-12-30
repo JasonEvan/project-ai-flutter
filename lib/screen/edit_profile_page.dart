@@ -25,6 +25,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
+    // set the controller of user provider data,
+    // so later the form is already filled with user data.
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     _usernameController = TextEditingController(text: userProvider.username);
     _bioController = TextEditingController(
@@ -38,6 +40,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Make a header with title and back button.
       appBar: AppBar(
         title: Text(
           'Edit Profile',
@@ -86,6 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 const SizedBox(
                   height: 20,
                 ),
+                // Make a form for user to update his data
                 Form(
                   key: _formKey,
                   child: Column(
@@ -171,6 +175,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       const SizedBox(
                         height: 20,
                       ),
+                      // Make a button to submit the form data,
+                      // and run the editMyProfile function.
                       ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
@@ -189,9 +195,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void editMyProfile() async {
+    // update the user provider first
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     userProvider.setUsername(_usernameController.text);
     userProvider.setBio(_bioController.text);
+    // update in the database
     try {
       await _auth.updateUserData(
           _usernameController.text, _bioController.text, userProvider.id);

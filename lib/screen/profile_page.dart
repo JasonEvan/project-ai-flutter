@@ -29,6 +29,7 @@ class ProfilePage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               child: Row(children: [
+                // Make a profile of our user
                 CircleAvatar(
                     radius: 45,
                     backgroundColor: Colors.white,
@@ -50,6 +51,7 @@ class ProfilePage extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
+                        // get user data from user provider, and show it
                         child: Consumer<UserProvider>(
                             builder: (context, userProvider, child) {
                           return Column(
@@ -94,6 +96,7 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
+            // Make a button for user to navigate to edit profile page.
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -137,6 +140,7 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
+            // Make a button for user to navigate to setting page.
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -180,6 +184,7 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
+            // Make a button for user to navigate to notification page.
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -223,6 +228,7 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
+            // Make a button for user to signout and navigate to authwrapper page.
             GestureDetector(
               onTap: () async {
                 await _auth.signOut();

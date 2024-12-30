@@ -8,9 +8,11 @@ class MyHomePage extends StatelessWidget {
   MyHomePage({super.key, required this.title});
 
   final String title;
+  // get article database
   final CollectionReference _productReference =
       FirebaseFirestore.instance.collection('article');
 
+  // Make a home screen
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -24,6 +26,7 @@ class MyHomePage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: <Widget>[
+              // Make a header
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
@@ -89,6 +92,7 @@ class MyHomePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              // Make a `Daily Article` title
               Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -114,6 +118,8 @@ class MyHomePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              // get data from database,
+              // show it using card with grid layout
               StreamBuilder<QuerySnapshot>(
                 stream: _productReference.snapshots(),
                 builder: (context, snapshot) {

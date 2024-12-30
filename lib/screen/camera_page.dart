@@ -18,9 +18,11 @@ class _CameraPageState extends State<CameraPage> {
   bool _isDetecting = false;
   final uri = 'https://d0n8p861-5000.asse.devtunnels.ms/predict';
 
+  // Make a function to open camera
   Future<void> _openCamera() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
 
+    // if image is not null, set the image to the _image variable
     if (image != null) {
       setState(() {
         _image = File(image.path);
@@ -29,6 +31,7 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
 
+  // Make a function to detect image
   Future<void> _detectImage() async {
     if (_image == null) return;
 
@@ -36,6 +39,8 @@ class _CameraPageState extends State<CameraPage> {
       _isDetecting = true;
     });
 
+    // request to the API with HTTP Request using POST method
+    // while requesting, send the image too
     try {
       final request = http.MultipartRequest(
         'POST',
@@ -47,10 +52,12 @@ class _CameraPageState extends State<CameraPage> {
         _image!.path,
       ));
 
+      // get response from the API
       final response = await request.send();
       final responseData = await response.stream.bytesToString();
       final jsonResponse = json.decode(responseData);
 
+      // if the response status is OK then show the prediction
       if (response.statusCode == 200) {
         showDialog(
           context: context,
@@ -59,6 +66,7 @@ class _CameraPageState extends State<CameraPage> {
             content: Text("Prediction: ${jsonResponse['data']}"),
           ),
         );
+      // else, show the error message
       } else {
         showDialog(
           context: context,
@@ -69,6 +77,7 @@ class _CameraPageState extends State<CameraPage> {
         );
       }
     } catch (e) {
+      // show error message if there is an error from server
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -83,6 +92,7 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
 
+  // Make a camera page view
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,6 +106,8 @@ class _CameraPageState extends State<CameraPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // if image is not null, show the image,
+            // else, show message that the image is not captured yet
             _image != null
                 ? SizedBox(
                     height: MediaQuery.of(context).size.height * 0.5,
@@ -112,6 +124,8 @@ class _CameraPageState extends State<CameraPage> {
             const SizedBox(
               height: 5,
             ),
+            // deactivate button if image is still null or in a proccess of detecting image
+            // on pressed, run the _detectImage function
             ElevatedButton(
                 onPressed:
                     _isImageAvailable && !_isDetecting ? _detectImage : null,

@@ -42,6 +42,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     const SizedBox(
                       height: 8,
                     ),
+                    // Make dropdown button to filter type of feedback
                     DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           labelText: "Problem Type",
@@ -61,6 +62,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     const SizedBox(
                       height: 10,
                     ),
+                    // Make a form to submit feedback
                     TextFormField(
                       maxLines: 8,
                       decoration: InputDecoration(
@@ -71,6 +73,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     const SizedBox(
                       height: 5,
                     ),
+                    // Make a button to submit feedback
                     ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);

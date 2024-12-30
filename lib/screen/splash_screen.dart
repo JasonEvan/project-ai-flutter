@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
 
+    // ganti animasi ke background yang lain setelah delay
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         _backgroundGradient = const LinearGradient(
@@ -41,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
 
-    // Navigasi ke halaman lain setelah 3 detik
+    // Navigasi ke halaman authwrapper setelah 3 detik
     Timer(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => AuthWrapper()));
@@ -50,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // bikin animated container, supaya animasi bisa berjalan
     return Scaffold(
       body: AnimatedContainer(
         duration: const Duration(seconds: 1),
@@ -58,6 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // ini adalah asset image logo leafspark
               Image.asset(
                 'assets/image/LIGHT.png',
                 width: 300,

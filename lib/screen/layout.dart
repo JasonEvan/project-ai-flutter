@@ -13,12 +13,16 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   int _currentIndex = 0;
 
+  // Get of all page in the array
   final List<Widget> _pages = [
     MyHomePage(title: 'HomePage'),
     const CameraPage(),
     ProfilePage(),
   ];
 
+  // Make a bottom navigation bar.
+  // If it is clicked, it will return the index of the item.
+  // When click, access the pages array with the index it's returned.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

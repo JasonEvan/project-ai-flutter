@@ -28,6 +28,7 @@ class SettingPage extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter)),
             child:
+                // get data from user provider and set it to email and phone
                 Consumer<UserProvider>(builder: (context, userProvider, child) {
               return Column(
                 children: [
